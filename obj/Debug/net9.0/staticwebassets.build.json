@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "uUWfakCJvJXTGhiwpNCTx4KTQ+y9eWiTpJjOEc/PpPg=",
+  "Source": "cashsyncapi",
+  "BasePath": "_content/cashsyncapi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
