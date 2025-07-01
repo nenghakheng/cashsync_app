@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("cashsyncapi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6802e0483a1f83a3b3b0443b52ad400e52056208")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b63d395cb02f904e0a46d567be16aea56541c21e")]
 [assembly: System.Reflection.AssemblyProductAttribute("cashsyncapi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cashsyncapi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
