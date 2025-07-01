@@ -1,4 +1,4 @@
-import 'package:cashsyncapp/pages/home/home_page.dart';
+import 'package:cashsyncapp/pages/auth/auth_page.dart';
 import 'package:cashsyncapp/viewModels/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +15,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: AuthPage(),
         theme: ThemeData(
+          scaffoldBackgroundColor: Color(0xFFFFFFFF),
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),

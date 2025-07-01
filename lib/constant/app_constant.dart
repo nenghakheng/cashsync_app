@@ -5,7 +5,7 @@ class AppConstant {
 
   static final AppConstant instance = AppConstant._();
 
-  static const String appName = 'Vodth';
+  static const String appName = 'CashSync';
 
   static const Locale fallbackLocale = Locale('en');
 

@@ -1,3 +1,4 @@
+import 'package:cashsyncapp/pages/auth/local_widgets/login.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatelessWidget {
@@ -5,9 +6,10 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('CashSync')),
-      body: const Center(child: Text('Welcome to the CashSync App!')),
-    );
+    return Scaffold(appBar: buildAppBar(context), body: LoginScreen());
+  }
+
+  PreferredSizeWidget buildAppBar(BuildContext context) {
+    return AppBar(centerTitle: true, forceMaterialTransparency: true);
   }
 }
