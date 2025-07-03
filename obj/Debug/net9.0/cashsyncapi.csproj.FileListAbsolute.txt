@@ -176,3 +176,4 @@
 /Users/macbookpro/Documents/cashsync-monorepo/apps/cashsyncapi/bin/Debug/net9.0/Newtonsoft.Json.dll
 /Users/macbookpro/Documents/cashsync-monorepo/apps/cashsyncapi/bin/Debug/net9.0/System.Management.dll
 /Users/macbookpro/Documents/cashsync-monorepo/apps/cashsyncapi/bin/Debug/net9.0/runtimes/win/lib/net7.0/System.Management.dll
+/Users/macbookpro/Documents/cashsync-monorepo/apps/cashsyncapi/bin/Debug/net9.0/BCrypt.Net-Next.dll

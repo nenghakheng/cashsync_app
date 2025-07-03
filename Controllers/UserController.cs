@@ -1,9 +1,11 @@
 using CashSyncApi.Models;
 using CashSyncApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashSyncApi.Controllers;
 
+[Authorize]
 [Route("api/users")]
 [ApiController]
 public class UserController : ControllerBase

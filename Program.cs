@@ -9,12 +9,11 @@ using TMSCore.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add Repository
-builder.Services.AddScoped<UserService>();
-
 // Add Services
 builder.Services.AddScoped<GoogleAuthService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<UserService>();
 
 // Configure JWT Authentication
 builder.Services.AddAuthentication(options =>

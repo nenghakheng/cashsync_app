@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "BkIRuSgo8N0=",
+  "dgSpecHash": "0x6feQ5yjgI=",
   "success": true,
   "projectFilePath": "/Users/macbookpro/Documents/cashsync-monorepo/apps/cashsyncapi/cashsyncapi.csproj",
   "expectedPackageFiles": [
     "/Users/macbookpro/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",
+    "/Users/macbookpro/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/google.apis/1.70.0/google.apis.1.70.0.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/google.apis.auth/1.70.0/google.apis.auth.1.70.0.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/google.apis.core/1.70.0/google.apis.core.1.70.0.nupkg.sha512",
