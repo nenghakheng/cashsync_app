@@ -8,12 +8,14 @@ class CredentialForm extends StatefulWidget {
     required this.obscurePassword,
     required this.emailController,
     required this.passwordController,
+    this.confirmPasswordController,
   });
 
   final GlobalKey<FormState> formKey;
   final bool obscurePassword;
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final TextEditingController? confirmPasswordController;
 
   @override
   State<CredentialForm> createState() => _CredentialFormState();
@@ -49,6 +51,17 @@ class _CredentialFormState extends State<CredentialForm> {
     return null;
   }
 
+  String? _confirmPasswordValidator(String? value) {
+    if (widget.confirmPasswordController == null) return null;
+    if (value == null || value.isEmpty) {
+      return 'Please confirm your password';
+    }
+    if (value != widget.passwordController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -61,6 +74,10 @@ class _CredentialFormState extends State<CredentialForm> {
           ConfigConstant.sizedBoxH2,
           // Password field
           _buildPasswordInput(),
+          if (widget.confirmPasswordController != null) ...[
+            ConfigConstant.sizedBoxH2,
+            _buildConfirmPasswordInput(),
+          ],
         ],
       ),
     );
@@ -100,6 +117,26 @@ class _CredentialFormState extends State<CredentialForm> {
             border: UnderlineInputBorder(),
           ),
           validator: (value) => _passwordValidator(value),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildConfirmPasswordInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Confirm Password", style: Theme.of(context).textTheme.bodyLarge),
+        TextFormField(
+          controller: widget.confirmPasswordController,
+          obscureText: _obscurePassword,
+          decoration: InputDecoration(
+            suffixIcon: _buildPasswordInputIcon(),
+            hintText: "*********",
+            hintStyle: TextStyle(color: Colors.grey.shade500),
+            border: UnderlineInputBorder(),
+          ),
+          validator: (value) => _confirmPasswordValidator(value),
         ),
       ],
     );
