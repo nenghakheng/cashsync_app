@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:japx/japx.dart';
 
 class BaseApi {
   final Dio _dio = Dio();
   final String baseUrl = dotenv.env['API_URL'] ?? 'http://localhost:5271/api';
+  final storage = const FlutterSecureStorage();
 
   BaseApi() {
     _dio.options.baseUrl = baseUrl;
@@ -25,13 +28,48 @@ class BaseApi {
     );
   }
 
-  Future<dynamic> get(String path) async {
-    final response = await _dio.get(path);
+  // Add Token to header request
+  Future<Options> _getAuthOptions() async {
+    final token = await storage.read(key: 'auth_token');
+    return Options(headers: {'Authorization': 'Bearer $token'});
+  }
+
+  Future<dynamic> get(String path, {bool withAuth = false}) async {
+    Options? options;
+    if (withAuth) {
+      options = await _getAuthOptions();
+    }
+
+    final response = await _dio.get(path, options: options);
+
+    // Flatten the response with Japx if needed
+    if (response.data is Map<String, dynamic>) {
+      // Japx.decode is a function to flatten the response
+      response.data = Japx.decode(response.data);
+    }
+
     return response.data;
   }
 
-  Future<dynamic> post(String path, Map<String, dynamic> data) async {
-    final response = await _dio.post(path, data: data);
+  // Combined post method with optional authentication
+  Future<dynamic> post(
+    String path,
+    Map<String, dynamic> data, {
+    bool withAuth = false,
+  }) async {
+    Options? options;
+    if (withAuth) {
+      options = await _getAuthOptions();
+    }
+
+    final response = await _dio.post(path, data: data, options: options);
+
+    // Flatten the response with Japx if needed
+    if (response.data is Map<String, dynamic>) {
+      // Japx.decode is a function to flatten the response
+      response.data = Japx.decode(response.data);
+    }
+
     return response.data;
   }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "492900706008",
+    "project_id": "cashsyncapp-e1a18",
+    "storage_bucket": "cashsyncapp-e1a18.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492900706008:android:0ad323bf102309837b99ad",
+        "android_client_info": {
+          "package_name": "com.example.cashsyncapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3c7c371kF0QOFZWDTA9_uxXQU583nwUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
