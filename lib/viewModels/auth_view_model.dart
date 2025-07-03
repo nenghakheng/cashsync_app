@@ -15,6 +15,7 @@ class AuthViewModel extends BaseViewModel {
 
   // Check if user is already logged in
   Future<void> checkAuthStatus() async {
+    print("Checking authentication status...");
     setLoading(true);
     try {
       // Try to get current user from secure storage
@@ -35,7 +36,7 @@ class AuthViewModel extends BaseViewModel {
     try {
       final response = await _authService.login(email, password);
 
-      if (response != null && response['token'] != null) {
+      if (response != null && response['data']['token'] != null) {
         currentUser = await _authService.getCurrentUser();
         isAuthenticated = true;
         notifyListeners();
@@ -61,7 +62,7 @@ class AuthViewModel extends BaseViewModel {
     try {
       final response = await _authService.googleLogin();
 
-      if (response != null && response['token'] != null) {
+      if (response != null && response['data']['token'] != null) {
         currentUser = await _authService.getCurrentUser();
         isAuthenticated = true;
         notifyListeners();

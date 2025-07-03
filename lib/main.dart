@@ -1,5 +1,6 @@
 import 'package:cashsyncapp/my_app.dart';
 import 'package:cashsyncapp/viewModels/auth_view_model.dart';
+import 'package:cashsyncapp/viewModels/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,10 @@ void main() async {
   }
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthViewModel())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
+      ],
       child: const MyApp(),
     ),
   ); // Start the app with MyApp widget

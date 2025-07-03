@@ -74,6 +74,8 @@ class AuthService extends BaseApi {
       // Add the token to request headers
       final response = await get("$endpoint/me", withAuth: true);
 
+      print("Response from getCurrentUser: $response");
+
       if (response != null) {
         return UserModel.fromJson(response);
       }
