@@ -1,25 +1,96 @@
+import 'package:cashsyncapp/http/api/auth_service.dart';
+import 'package:cashsyncapp/models/user_model.dart';
 import 'package:cashsyncapp/viewModels/base_view_model.dart';
 
 class AuthViewModel extends BaseViewModel {
-  // This class can be extended to handle authentication logic
-  // For example, you can add methods for login, logout, and registration
+  final AuthService _authService = AuthService();
+
+  UserModel? currentUser;
+  String? errorMessage;
+  bool isAuthenticated = false;
 
   AuthViewModel() {
-    // Initialize any necessary data or services here
+    checkAuthStatus();
   }
 
-  // Example method for login
-  Future<void> login(String username, String password) async {
+  // Check if user is already logged in
+  Future<void> checkAuthStatus() async {
     setLoading(true);
-    // Implement your login logic here
-    // After successful login, you might want to notify listeners
+    try {
+      // Try to get current user from secure storage
+      currentUser = await _authService.getCurrentUser();
+      isAuthenticated = currentUser != null;
+    } catch (e) {
+      errorMessage = "Error checking authentication status";
+      print(errorMessage);
+    }
     setLoading(false);
   }
 
-  // Example method for logout
+  // Standard login
+  Future<bool> login(String email, String password) async {
+    errorMessage = null;
+    setLoading(true);
+
+    try {
+      final response = await _authService.login(email, password);
+
+      if (response != null && response['token'] != null) {
+        currentUser = await _authService.getCurrentUser();
+        isAuthenticated = true;
+        notifyListeners();
+        return true;
+      } else {
+        errorMessage = "Invalid credentials";
+        return false;
+      }
+    } catch (error) {
+      errorMessage = "Login failed: ${error.toString()}";
+      print('Login error: $error');
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Google login
+  Future<bool> googleLogin() async {
+    errorMessage = null;
+    setLoading(true);
+
+    try {
+      final response = await _authService.googleLogin();
+
+      if (response != null && response['token'] != null) {
+        currentUser = await _authService.getCurrentUser();
+        isAuthenticated = true;
+        notifyListeners();
+        return true;
+      } else {
+        errorMessage = "Google login failed";
+        return false;
+      }
+    } catch (error) {
+      errorMessage = "Google login failed: ${error.toString()}";
+      print('Google login error: $error');
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Logout
   Future<void> logout() async {
     setLoading(true);
-    // Implement your logout logic here
+    try {
+      await _authService.logout();
+      currentUser = null;
+      isAuthenticated = false;
+    } catch (error) {
+      errorMessage = "Logout failed: ${error.toString()}";
+      print('Logout error: $error');
+    }
     setLoading(false);
+    notifyListeners();
   }
 }

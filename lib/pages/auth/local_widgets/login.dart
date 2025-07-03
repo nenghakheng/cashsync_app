@@ -1,7 +1,9 @@
 import 'package:cashsyncapp/constant/config_constant.dart';
 import 'package:cashsyncapp/pages/auth/local_widgets/credentials_form.dart';
+import 'package:cashsyncapp/viewModels/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,7 +26,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return buildBody(context);
+    // Access AuthViewModel from context
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
+    // If loading, show progress indicator
+    if (authViewModel.isLoading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    // If user is authenticated, redirect to home page
+    if (authViewModel.isAuthenticated) {
+      // Use Future.microtask to navigate after the build is complete
+      Future.microtask(() {
+        Navigator.of(context).pushReplacementNamed('/home');
+      });
+    }
+
+    return Scaffold(body: SingleChildScrollView(child: buildBody(context)));
   }
 
   Widget buildBody(BuildContext context) {
@@ -62,16 +80,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  // Navigate to Sign Up screen
-                  print('Navigate to Sign Up screen');
+                  // Navigate to sign up screen
+                  Navigator.pushNamed(context, '/signup');
                 },
-                child: Text(
-                  'Sign up',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Color(0xFF5063BF),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: const Text('Sign up'),
               ),
             ],
           ),
@@ -106,16 +118,29 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget buildLoginButton(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         if (_formKey.currentState!.validate()) {
-          // Handle login logic
-          print('Email: ${_emailController.text}');
-          print('Password: ${_passwordController.text}');
+          // Attempt login
+          final success = await authViewModel.login(
+            _emailController.text.trim(),
+            _passwordController.text,
+          );
+
+          if (!success && mounted) {
+            // Show error message if login failed
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(authViewModel.errorMessage ?? 'Login failed'),
+              ),
+            );
+          }
         }
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF5063BF),
+        backgroundColor: const Color(0xFF5063BF),
         padding: const EdgeInsets.symmetric(horizontal: 64, vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: ConfigConstant.circlarRadius3,
@@ -132,6 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget buildGoogleAuthSection(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
     return Column(
       children: [
         // Wrap the Row in a Container with same horizontal padding as the login button
@@ -159,7 +186,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
         // Google sign in button
         ElevatedButton(
-          // Match the style/width of the login button
+          onPressed: () async {
+            final success = await authViewModel.googleLogin();
+
+            if (!success && mounted) {
+              // Show error message if Google login failed
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    authViewModel.errorMessage ?? 'Google login failed',
+                  ),
+                ),
+              );
+            }
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -167,11 +207,6 @@ class _LoginScreenState extends State<LoginScreen> {
               borderRadius: BorderRadius.circular(ConfigConstant.radius3),
             ),
           ),
-          onPressed:
-              () => {
-                // Handle Google sign-in logic
-                print('Google Sign-In button pressed'),
-              },
           child: SvgPicture.asset(
             'assets/googlelogo.svg', // Changed to SVG extension
             height: 32,
