@@ -7,6 +7,8 @@ class UserService extends BaseApi {
   Future<List<UserModel>> fetchAllUsers() async {
     final response = await get(endpoint);
 
+    print("objects: $response");
+
     return (response as List).map((user) => UserModel.fromJson(user)).toList();
   }
 

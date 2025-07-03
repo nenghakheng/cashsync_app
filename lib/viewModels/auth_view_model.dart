@@ -54,6 +54,39 @@ class AuthViewModel extends BaseViewModel {
     }
   }
 
+  // Sign Up
+  Future<bool> signUp(String email, String password) async {
+    errorMessage = null;
+    setLoading(true);
+
+    try {
+      final response = await _authService.signUp(email, password);
+
+      if (response != null) {
+        // Automatically log in after successful sign up
+        final loginResponse = await _authService.login(email, password);
+        if (loginResponse != null && loginResponse['data']['token'] != null) {
+          currentUser = await _authService.getCurrentUser();
+          isAuthenticated = true;
+        } else {
+          errorMessage = "Sign up succeeded but login failed";
+          return false;
+        }
+        notifyListeners();
+        return true;
+      } else {
+        errorMessage = "Sign up failed";
+        return false;
+      }
+    } catch (error) {
+      errorMessage = "Sign up failed: ${error.toString()}";
+      print('Sign up error: $error');
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   // Google login
   Future<bool> googleLogin() async {
     errorMessage = null;

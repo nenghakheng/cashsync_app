@@ -10,15 +10,24 @@ class AuthService extends BaseApi {
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 
   Future<dynamic> login(String email, String password) async {
-    final response = await post("$endpoint", {
+    final response = await post("$endpoint/login", {
       "email": email,
       "password": password,
     });
 
     // Store the JWT token if it's in the response
-    if (response != null && response['token'] != null) {
+    if (response != null && response['data']['token'] != null) {
       await storage.write(key: 'auth_token', value: response['token']);
     }
+
+    return response;
+  }
+
+  Future<dynamic> signUp(String email, String password) async {
+    final response = await post("$endpoint/signup", {
+      "email": email,
+      "password": password,
+    });
 
     return response;
   }

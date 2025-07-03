@@ -13,7 +13,6 @@ class UserViewModel extends BaseViewModel {
 
   void load() {
     fetchUsers();
-    fetchUserById(3);
   }
 
   Future<void> fetchUsers() async {
