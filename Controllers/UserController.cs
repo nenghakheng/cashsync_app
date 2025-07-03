@@ -1,5 +1,5 @@
-using CashSyncApi.Data;
 using CashSyncApi.Models;
+using CashSyncApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashSyncApi.Controllers;
@@ -8,17 +8,17 @@ namespace CashSyncApi.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly UserRepository _userRepository;
+    private readonly UserService _userService;
 
-    public UserController(UserRepository userRepository)
+    public UserController(UserService userService)
     {
-        _userRepository = userRepository;
+        _userService = userService;
     }
 
     [HttpGet]
     public async Task<ActionResult<List<UserModel>?>> GetAllUsers()
     {
-        List<UserModel>? users = await _userRepository.GatAllUsersAsync();
+        List<UserModel>? users = await _userService.GatAllUsersAsync();
 
         return users;
     }
@@ -26,7 +26,7 @@ public class UserController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<UserModel?>> GetUserById(int id)
     {
-        UserModel? user = await _userRepository.GetUserByIdAsync(id);
+        UserModel? user = await _userService.GetUserByIdAsync(id);
 
         if (user == null)
         {
