@@ -1,5 +1,6 @@
 import 'package:cashsyncapp/http/api/auth_service.dart';
 import 'package:cashsyncapp/models/user_model.dart';
+import 'package:cashsyncapp/providers/current_user_provider.dart';
 import 'package:cashsyncapp/viewModels/base_view_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -11,7 +12,7 @@ class AuthViewModel extends BaseViewModel {
   bool isAuthenticated = false;
 
   AuthViewModel() {
-    _initAuthState(); // Initialize auth state on object creation
+    _initAuthState();
   }
 
   Future<void> _initAuthState() async {
@@ -50,6 +51,13 @@ class AuthViewModel extends BaseViewModel {
     setLoading(false);
   }
 
+  Future<void> updateCurrentUserInProvider(UserModel user) async {
+    final CurrentUserProvider currentUserProvider = CurrentUserProvider();
+    currentUserProvider.setCurrentUser(user);
+
+    notifyListeners();
+  }
+
   // Standard login
   Future<bool> login(String email, String password) async {
     errorMessage = null;
@@ -61,6 +69,10 @@ class AuthViewModel extends BaseViewModel {
       if (response != null && response['data']['token'] != null) {
         currentUser = await _authService.getCurrentUser();
         isAuthenticated = true;
+
+        // Update Current User Provider
+        await updateCurrentUserInProvider(currentUser!);
+
         notifyListeners();
         return true;
       } else {
@@ -90,6 +102,9 @@ class AuthViewModel extends BaseViewModel {
         if (loginResponse != null && loginResponse['data']['token'] != null) {
           currentUser = await _authService.getCurrentUser();
           isAuthenticated = true;
+
+          // Update Current User Provider
+          await updateCurrentUserInProvider(currentUser!);
         } else {
           errorMessage = "Sign up succeeded but login failed";
           return false;
@@ -120,6 +135,10 @@ class AuthViewModel extends BaseViewModel {
       if (response != null && response['data']['token'] != null) {
         currentUser = await _authService.getCurrentUser();
         isAuthenticated = true;
+
+        // Update Current User Provider
+        await updateCurrentUserInProvider(currentUser!);
+
         notifyListeners();
         return true;
       } else {

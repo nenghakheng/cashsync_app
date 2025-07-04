@@ -81,6 +81,7 @@ class AuthService extends BaseApi {
       final response = await get("$endpoint/me", withAuth: true);
 
       if (response != null) {
+        print("Current User Response: $response");
         return UserModel.fromJson(response);
       }
     } catch (e) {
