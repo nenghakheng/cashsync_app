@@ -2,7 +2,6 @@ import 'package:cashsyncapp/http/base_api.dart';
 import 'package:cashsyncapp/models/user_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:japx/japx.dart';
 
 class AuthService extends BaseApi {
   static const String endpoint = "/auth";
@@ -51,8 +50,6 @@ class AuthService extends BaseApi {
         "idToken": googleAuth.idToken,
       });
 
-      print("Google Auth response: $response");
-
       // Extract the token from the response
       if (response != null &&
           response['data'] != null &&
@@ -82,8 +79,6 @@ class AuthService extends BaseApi {
     try {
       // Add the token to request headers
       final response = await get("$endpoint/me", withAuth: true);
-
-      print("Response from getCurrentUser: $response");
 
       if (response != null) {
         return UserModel.fromJson(response);

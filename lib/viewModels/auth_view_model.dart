@@ -1,6 +1,7 @@
 import 'package:cashsyncapp/http/api/auth_service.dart';
 import 'package:cashsyncapp/models/user_model.dart';
 import 'package:cashsyncapp/viewModels/base_view_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthViewModel extends BaseViewModel {
   final AuthService _authService = AuthService();
@@ -10,12 +11,33 @@ class AuthViewModel extends BaseViewModel {
   bool isAuthenticated = false;
 
   AuthViewModel() {
-    checkAuthStatus();
+    _initAuthState(); // Initialize auth state on object creation
+  }
+
+  Future<void> _initAuthState() async {
+    setLoading(true);
+    try {
+      // Check if token exists in storage
+      final token = await const FlutterSecureStorage().read(key: 'auth_token');
+
+      if (token != null && token.isNotEmpty) {
+        // Token exists, try to get current user
+        currentUser = await _authService.getCurrentUser();
+        isAuthenticated = currentUser != null;
+        print(
+          "Auth state restored: ${isAuthenticated ? 'Authenticated' : 'Not authenticated'}",
+        );
+      }
+    } catch (e) {
+      print("Error initializing auth state: $e");
+    } finally {
+      setLoading(false);
+      notifyListeners();
+    }
   }
 
   // Check if user is already logged in
   Future<void> checkAuthStatus() async {
-    print("Checking authentication status...");
     setLoading(true);
     try {
       // Try to get current user from secure storage

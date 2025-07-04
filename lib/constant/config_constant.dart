@@ -7,6 +7,36 @@ class ConfigConstant {
   static const double sliverExpandedHeight = 200;
 
   /// ```dart
+  /// padding0 = 4.0
+  /// ```
+  static const double padding0 = 4.0;
+
+  /// ```dart
+  /// padding1 = 8.0
+  /// ```
+  static const double padding1 = 8.0;
+
+  /// ```dart
+  /// padding2 = 16.0
+  /// ```
+  static const double padding2 = 16.0;
+
+  /// ```dart
+  /// padding3 = 24.0
+  /// ```
+  static const double padding3 = 24.0;
+
+  /// ```dart
+  /// padding4 = 32.0
+  /// ```
+  static const double padding4 = 32.0;
+
+  /// ```dart
+  /// padding5 = 48.0
+  /// ```
+  static const double padding5 = 48.0;
+
+  /// ```dart
   /// margin0 = 4.0
   /// ```
   static const double margin0 = 4.0;
