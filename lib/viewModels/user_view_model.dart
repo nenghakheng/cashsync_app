@@ -7,9 +7,9 @@ class UserViewModel extends BaseViewModel {
   List<UserModel?> users = [];
   UserModel? user;
 
-  UserViewModel() {
-    load(); // Call load function on object creation
-  }
+  // UserViewModel() {
+  //   load(); // Call load function on object creation
+  // }
 
   void load() {
     fetchUsers();

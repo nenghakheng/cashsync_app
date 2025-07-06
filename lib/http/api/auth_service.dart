@@ -16,7 +16,7 @@ class AuthService extends BaseApi {
 
     // Store the JWT token if it's in the response
     if (response != null && response['data']['token'] != null) {
-      await storage.write(key: 'auth_token', value: response['token']);
+      await storage.write(key: 'auth_token', value: response['data']['token']);
     }
 
     return response;
@@ -73,6 +73,7 @@ class AuthService extends BaseApi {
     final token = await storage.read(key: 'auth_token');
 
     if (token == null) {
+      print("Not logged in, no token found.");
       return null; // Not logged in
     }
 
@@ -81,7 +82,6 @@ class AuthService extends BaseApi {
       final response = await get("$endpoint/me", withAuth: true);
 
       if (response != null) {
-        print("Current User Response: $response");
         return UserModel.fromJson(response);
       }
     } catch (e) {

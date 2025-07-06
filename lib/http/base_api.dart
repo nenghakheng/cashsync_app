@@ -54,10 +54,11 @@ class BaseApi {
   // Combined post method with optional authentication
   Future<dynamic> post(
     String path,
-    Map<String, dynamic> data, {
+    dynamic data, {
     bool withAuth = false,
   }) async {
     Options? options;
+
     if (withAuth) {
       options = await _getAuthOptions();
     }
@@ -67,6 +68,44 @@ class BaseApi {
     // Flatten the response with Japx if needed
     if (response.data is Map<String, dynamic>) {
       // Japx.decode is a function to flatten the response
+      response.data = Japx.decode(response.data);
+    }
+
+    return response.data;
+  }
+
+  // Put method with optional authentication
+  Future<dynamic> put(
+    String path,
+    dynamic data, {
+    bool withAuth = false,
+  }) async {
+    Options? options;
+    if (withAuth) {
+      options = await _getAuthOptions();
+    }
+
+    final response = await _dio.put(path, data: data, options: options);
+
+    // Flatten the response with Japx if needed
+    if (response.data is Map<String, dynamic>) {
+      response.data = Japx.decode(response.data);
+    }
+
+    return response.data;
+  }
+
+  // Delete method with optional authentication
+  Future<dynamic> delete(String path, {bool withAuth = false}) async {
+    Options? options;
+    if (withAuth) {
+      options = await _getAuthOptions();
+    }
+
+    final response = await _dio.delete(path, options: options);
+
+    // Flatten
+    if (response.data is Map<String, dynamic>) {
       response.data = Japx.decode(response.data);
     }
 
