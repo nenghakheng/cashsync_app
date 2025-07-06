@@ -1,5 +1,6 @@
 import 'package:cashsyncapp/commons/auth_button.dart';
 import 'package:cashsyncapp/constant/config_constant.dart';
+import 'package:cashsyncapp/pages/profile/profile_page.dart';
 import 'package:cashsyncapp/viewModels/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -93,6 +94,9 @@ class _SideBarState extends State<SideBar> {
           onTap: () {
             Navigator.pop(context);
             // Navigate to Profile
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
+            );
           },
         ),
         SizedBox(height: 8),

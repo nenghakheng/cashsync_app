@@ -142,6 +142,11 @@ class ConfigConstant {
   static const double radius3 = 24.0;
 
   /// ```dart
+  /// profileRadius3 = 24.0
+  /// ```
+  static const double profileRadius3 = 80.0;
+
+  /// ```dart
   /// circlarRadius1 = BorderRadius.circular(8.0)
   /// ```
   static final BorderRadius circlarRadius1 = BorderRadius.circular(radius1);

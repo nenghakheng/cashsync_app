@@ -20,10 +20,8 @@ class AuthGate extends StatelessWidget {
 
         // Navigate based on authentication state
         if (authViewModel.isAuthenticated) {
-          print("Navigating to HomePage");
           return const HomePage();
         } else {
-          print("Navigating to AuthPage: ${authViewModel.isAuthenticated}");
           return const AuthPage();
         }
       },

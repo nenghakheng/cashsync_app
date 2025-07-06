@@ -1,6 +1,10 @@
 import 'package:cashsyncapp/my_app.dart';
+import 'package:cashsyncapp/providers/current_user_provider.dart';
 import 'package:cashsyncapp/viewModels/auth_view_model.dart';
+import 'package:cashsyncapp/viewModels/profile_view_model.dart';
 import 'package:cashsyncapp/viewModels/user_view_model.dart';
+import 'package:cloudinary_flutter/cloudinary_context.dart';
+import 'package:cloudinary_flutter/cloudinary_object.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -16,9 +20,13 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => CurrentUserProvider()),
         ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => ProfileViewModel()),
       ],
       child: const MyApp(),
     ),
   ); // Start the app with MyApp widget
+
+  void configCloudinary() {}
 }
