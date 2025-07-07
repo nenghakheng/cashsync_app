@@ -1,5 +1,5 @@
-import 'package:cashsyncapp/pages/auth/auth_page.dart';
-import 'package:cashsyncapp/pages/home/home_page.dart';
+import 'package:cashsyncapp/commons/bottom_navigation.dart';
+import 'package:cashsyncapp/pages/auth/auth_screen.dart';
 import 'package:cashsyncapp/viewModels/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +20,9 @@ class AuthGate extends StatelessWidget {
 
         // Navigate based on authentication state
         if (authViewModel.isAuthenticated) {
-          return const HomePage();
+          return const BottomNavigation();
         } else {
-          return const AuthPage();
+          return const AuthScreen();
         }
       },
     );

@@ -2,14 +2,14 @@ import 'package:cashsyncapp/pages/auth/local_widgets/login_screen.dart';
 import 'package:cashsyncapp/pages/auth/local_widgets/signup_screen.dart';
 import 'package:flutter/material.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _AuthScreenState extends State<AuthScreen> {
   bool showLoginScreen = true;
 
   void toggleAuthScreen() {
