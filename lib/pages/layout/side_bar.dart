@@ -1,4 +1,4 @@
-import 'package:cashsyncapp/commons/auth_button.dart';
+import 'package:cashsyncapp/commons/widgets/auth_button.dart';
 import 'package:cashsyncapp/constant/config_constant.dart';
 import 'package:cashsyncapp/pages/profile/profile_screen.dart';
 import 'package:cashsyncapp/viewModels/auth_view_model.dart';

@@ -1,4 +1,4 @@
-import 'package:cashsyncapp/commons/navigate_button.dart';
+import 'package:cashsyncapp/commons/widgets/navigate_button.dart';
 import 'package:cashsyncapp/constant/config_constant.dart';
 import 'package:cashsyncapp/models/user_model.dart';
 import 'package:cashsyncapp/pages/profile/local_widgets/profile_picture.dart';
