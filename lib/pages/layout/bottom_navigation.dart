@@ -1,4 +1,4 @@
-import 'package:cashsyncapp/commons/custom_bar.dart';
+import 'package:cashsyncapp/commons/widgets/custom_bar.dart';
 import 'package:cashsyncapp/constant/config_constant.dart';
 import 'package:cashsyncapp/pages/dca/dca_screen.dart';
 import 'package:cashsyncapp/pages/home/home_screen.dart';
@@ -25,6 +25,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       drawer: SideBar(),
       appBar: CustomAppBar(),
       body: _pages[_currentIndex],
@@ -69,10 +70,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildNavItem(0, Icons.home_outlined, itemWidth),
-                  _buildNavItem(1, Icons.search_outlined, itemWidth),
-                  _buildNavItem(2, Icons.notifications_outlined, itemWidth),
-                  _buildNavItem(3, Icons.person_outline, itemWidth),
+                  _buildNavItem(0, Icons.home_rounded, itemWidth),
+                  _buildNavItem(1, Icons.checklist_rounded, itemWidth),
+                  _buildNavItem(2, Icons.access_time, itemWidth),
+                  _buildNavItem(3, Icons.settings_rounded, itemWidth),
                 ],
               ),
             ),
