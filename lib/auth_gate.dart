@@ -1,4 +1,4 @@
-import 'package:cashsyncapp/commons/widgets/bottom_navigation.dart';
+import 'package:cashsyncapp/pages/layout/bottom_navigation.dart';
 import 'package:cashsyncapp/pages/auth/auth_screen.dart';
 import 'package:cashsyncapp/viewModels/auth_view_model.dart';
 import 'package:flutter/material.dart';

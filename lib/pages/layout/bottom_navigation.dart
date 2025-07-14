@@ -25,6 +25,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       drawer: SideBar(),
       appBar: CustomAppBar(),
       body: _pages[_currentIndex],
