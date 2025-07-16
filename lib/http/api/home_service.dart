@@ -19,7 +19,6 @@ class HomeService extends BaseApi {
     final response = await get("$endpoint/stocks/trending", withAuth: true);
 
     final List<dynamic> trendingStocksList = response['data'] as List<dynamic>;
-    print("Trending Stocks Response: $response");
     return trendingStocksList
         .map((stock) => TrendingStockModel.fromJson(stock))
         .toList();
@@ -29,7 +28,6 @@ class HomeService extends BaseApi {
     final response = await get("$endpoint/stocks/growing", withAuth: true);
 
     final List<dynamic> growingStocksList = response['data'] as List<dynamic>;
-    print("Growing Stocks Response: $response");
     return growingStocksList
         .map((stock) => GrowingStockModel.fromJson(stock))
         .toList();
