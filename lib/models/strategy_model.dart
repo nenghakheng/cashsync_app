@@ -45,13 +45,6 @@ class StrategyModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'description': description,
-      'type': type,
-      'entryPrice': entryPrice,
-      'exitPrice': exitPrice,
-      'isActive': isActive,
-    };
+    return {'name': name, 'description': description, 'entryPrice': entryPrice};
   }
 }

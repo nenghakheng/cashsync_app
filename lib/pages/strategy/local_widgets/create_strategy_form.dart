@@ -3,8 +3,10 @@ import 'package:cashsyncapp/commons/widgets/action_button.dart';
 import 'package:cashsyncapp/commons/widgets/sub_app_bar.dart';
 import 'package:cashsyncapp/constant/config_constant.dart';
 import 'package:cashsyncapp/models/strategy_model.dart';
+import 'package:cashsyncapp/utils/loader/loading_dialog.dart';
 import 'package:cashsyncapp/viewModels/strategy_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CreateStrategyForm extends StatefulWidget {
   const CreateStrategyForm({super.key});
@@ -30,7 +32,7 @@ class _CreateStrategyFormState extends State<CreateStrategyForm> {
     super.dispose();
   }
 
-  void onFormSubmit() {
+  void onFormSubmit(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
       // Handle form submission logic here
       final strategyName = _stratNameController.text;
@@ -42,6 +44,11 @@ class _CreateStrategyFormState extends State<CreateStrategyForm> {
       print('Strategy Description: $strategyDesc');
       print('Entry Price: $entryPrice');
 
+      LoadingDialog.instance().show(
+        context: context,
+        text: "Saving Strategy...",
+      );
+
       // Create a StrategyModel instance
       final strategy = StrategyModel(
         name: strategyName,
@@ -49,14 +56,20 @@ class _CreateStrategyFormState extends State<CreateStrategyForm> {
         entryPrice: double.tryParse(entryPrice) ?? 0.0,
       );
 
-      // Call the ViewModel to create the strategy
-      strategyViewModel.createStrategy(strategy);
+      try {
+        await strategyViewModel.createStrategy(strategy); // Await if async
+        // Optionally show a success message or pop the screen
+      } catch (e) {
+        // Optionally show an error message
+      } finally {
+        LoadingDialog.instance().hide(); // Always hide the dialog
+      }
 
       // Clear the form fields after submission
       _stratNameController.clear();
       _stratDescController.clear();
       _entryPriceController.clear();
-    }
+    } else {}
   }
 
   @override
@@ -87,18 +100,24 @@ class _CreateStrategyFormState extends State<CreateStrategyForm> {
                 InputField(
                   text: "Name",
                   hintText: "Enter Strategy Name",
+                  keyboardType: TextInputType.text,
                   controller: _stratNameController,
                 ),
                 ConfigConstant.sizedBoxH4,
                 InputField(
                   text: "Description",
                   hintText: "Enter Strategy Description",
+                  keyboardType: TextInputType.text,
                   controller: _stratDescController,
                 ),
                 ConfigConstant.sizedBoxH4,
                 InputField(
                   text: "Entry Price",
                   hintText: "Enter Entry Price",
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                  ], // allows decimals
                   controller: _entryPriceController,
                 ),
               ],
@@ -109,7 +128,7 @@ class _CreateStrategyFormState extends State<CreateStrategyForm> {
           ActionButton(
             title: "Save",
             onPressed: () {
-              onFormSubmit();
+              onFormSubmit(context);
             },
           ),
         ],
