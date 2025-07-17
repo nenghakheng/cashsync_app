@@ -33,6 +33,7 @@ class StrategyService extends BaseApi {
   }
 
   Future<void> createStrategy(StrategyModel strategy) async {
+    print("Creating strategy: ${strategy.toJson()}");
     final response = await post(endpoint, strategy.toJson(), withAuth: true);
 
     if (response['errors'] != null) {

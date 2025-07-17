@@ -27,4 +27,16 @@ class StrategyViewModel extends BaseViewModel {
   Future<void> fetchUserStrategies() async {
     strategies = await _strategyService.fetchUserStrategies();
   }
+
+  Future<void> createStrategy(StrategyModel strategy) async {
+    setLoading(true);
+    try {
+      await _strategyService.createStrategy(strategy);
+      await fetchUserStrategies();
+    } catch (e) {
+      print("Error creating strategy: $e");
+      rethrow;
+    }
+    setLoading(false);
+  }
 }

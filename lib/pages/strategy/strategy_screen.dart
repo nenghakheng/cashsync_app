@@ -1,4 +1,5 @@
 import 'package:cashsyncapp/constant/config_constant.dart';
+import 'package:cashsyncapp/pages/strategy/local_widgets/create_strategy_form.dart';
 import 'package:cashsyncapp/pages/strategy/local_widgets/strategy_list.dart';
 import 'package:cashsyncapp/viewModels/strategy_view_model.dart';
 import 'package:flutter/material.dart';
@@ -64,12 +65,33 @@ class _StrategyScreenState extends State<StrategyScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Strategies",
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF878787),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Strategies",
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF878787),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return CreateStrategyForm();
+                            },
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.add_circle_outline,
+                        size: ConfigConstant.iconSize3,
+                        color: Color(0xFF5164BF),
+                      ),
+                    ),
+                  ],
                 ),
                 ConfigConstant.sizedBoxH2,
                 Expanded(

@@ -46,16 +46,12 @@ class StrategyModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'description': description,
       'type': type,
       'entryPrice': entryPrice,
       'exitPrice': exitPrice,
-      'profits': profits,
-      'losses': losses,
       'isActive': isActive,
-      'userId': userId,
     };
   }
 }
