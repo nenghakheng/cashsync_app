@@ -1,6 +1,6 @@
 import 'package:cashsyncapp/constant/config_constant.dart';
 import 'package:cashsyncapp/pages/home/local_widgets.dart/growing_stock_list.dart';
-import 'package:cashsyncapp/pages/home/local_widgets.dart/strategy_list.dart';
+import 'package:cashsyncapp/pages/home/local_widgets.dart/horizontal_strategy_list.dart';
 import 'package:cashsyncapp/pages/home/local_widgets.dart/trending_stock_list.dart';
 import 'package:cashsyncapp/viewModels/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -28,29 +28,33 @@ class _HomeScreenState extends State<HomeScreen> {
         future: homeViewModel.initialize(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(color: Color(0xFF5164BF)),
+            );
           }
 
           if (snapshot.hasError) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
-                const SizedBox(height: 16),
-                Text(
-                  'Error loading data',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      homeViewModel = HomeViewModel();
-                    });
-                  },
-                  child: const Text('Retry'),
-                ),
-              ],
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Error loading data',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        homeViewModel = HomeViewModel();
+                      });
+                    },
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
             );
           }
 
@@ -67,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    StrategyList(homeViewModel: homeViewModel),
+                    HorizontalStrategyList(homeViewModel: homeViewModel),
                     TrendingStockList(homeViewModel: homeViewModel),
                     GrowingStockList(homeViewModel: homeViewModel),
                   ],

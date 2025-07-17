@@ -7,6 +7,10 @@ class StrategyModel {
   double? exitPrice;
   double? profits;
   double? losses;
+  double? get profitLoss =>
+      (entryPrice != null && exitPrice != null)
+          ? exitPrice! - entryPrice!
+          : null;
   bool? isActive;
 
   // Relationship
@@ -38,5 +42,16 @@ class StrategyModel {
       isActive: json['isActive'],
       userId: json['userId'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'type': type,
+      'entryPrice': entryPrice,
+      'exitPrice': exitPrice,
+      'isActive': isActive,
+    };
   }
 }
