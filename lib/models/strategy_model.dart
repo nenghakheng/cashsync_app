@@ -7,6 +7,10 @@ class StrategyModel {
   double? exitPrice;
   double? profits;
   double? losses;
+  double? get profitLoss =>
+      (entryPrice != null && exitPrice != null)
+          ? exitPrice! - entryPrice!
+          : null;
   bool? isActive;
 
   // Relationship

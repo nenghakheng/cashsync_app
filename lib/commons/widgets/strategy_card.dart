@@ -3,30 +3,39 @@ import 'package:cashsyncapp/models/strategy_model.dart';
 import 'package:flutter/material.dart';
 
 class StrategyCard extends StatelessWidget {
-  const StrategyCard({super.key, this.width, required this.strategy});
+  const StrategyCard({
+    super.key,
+    this.width,
+    required this.strategy,
+    this.onTap,
+  });
 
   final double? width;
   final StrategyModel strategy;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width ?? double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: Color(0xFF5163BF), width: 1),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            _buildTileIcon(strategy),
-            SizedBox(width: 16),
-            _buildStrategyInfo(strategy),
-            SizedBox(width: 8),
-            _buildTileTrailing(strategy),
-          ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: width ?? double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(32),
+          border: Border.all(color: Color(0xFF5163BF), width: 1),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              _buildTileIcon(strategy),
+              SizedBox(width: 16),
+              _buildStrategyInfo(strategy),
+              SizedBox(width: 8),
+              _buildTileTrailing(strategy),
+            ],
+          ),
         ),
       ),
     );

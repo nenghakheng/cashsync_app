@@ -2,6 +2,7 @@ import 'package:cashsyncapp/my_app.dart';
 import 'package:cashsyncapp/providers/current_user_provider.dart';
 import 'package:cashsyncapp/viewModels/auth_view_model.dart';
 import 'package:cashsyncapp/viewModels/profile_view_model.dart';
+import 'package:cashsyncapp/viewModels/stock_checklist_view_model.dart';
 import 'package:cashsyncapp/viewModels/strategy_view_model.dart';
 import 'package:cashsyncapp/viewModels/user_view_model.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserViewModel()),
         ChangeNotifierProvider(create: (_) => ProfileViewModel()),
         ChangeNotifierProvider(create: (_) => StrategyViewModel()),
+        ChangeNotifierProvider(create: (_) => StockChecklistViewModel()),
       ],
       child: const MyApp(),
     ),

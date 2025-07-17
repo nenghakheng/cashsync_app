@@ -1,10 +1,12 @@
 import 'package:cashsyncapp/http/api/strategy_service.dart';
+import 'package:cashsyncapp/models/stock_checklist_model.dart';
 import 'package:cashsyncapp/models/strategy_model.dart';
 import 'package:cashsyncapp/viewModels/base_view_model.dart';
 
 class StrategyViewModel extends BaseViewModel {
   final StrategyService _strategyService = StrategyService();
   List<StrategyModel> strategies = [];
+  List<StockChecklistModel> stockChecklists = [];
 
   StrategyViewModel() {
     initialize();
