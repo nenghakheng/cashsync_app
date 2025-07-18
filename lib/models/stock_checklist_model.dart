@@ -20,18 +20,10 @@ class StockChecklistModel {
       id: json['id'],
       note: json['note'],
       isChecked: json['isChecked'],
-      strategyId: json['strategyId'],
-      stockId: json['stockId'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'note': note,
-      'isChecked': isChecked,
-      'strategyId': strategyId,
-      'stockId': stockId,
-    };
+    return {'note': note, 'isChecked': isChecked, 'strategyId': strategyId};
   }
 }
