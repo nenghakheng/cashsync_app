@@ -6,9 +6,14 @@ import 'package:cashsyncapp/viewModels/stock_checklist_view_model.dart';
 import 'package:flutter/material.dart';
 
 class StrategyDetail extends StatefulWidget {
-  const StrategyDetail({super.key, required this.strategy});
+  const StrategyDetail({
+    super.key,
+    required this.strategy,
+    this.onAddChecklist,
+  });
 
   final StrategyModel strategy;
+  final VoidCallbackAction? onAddChecklist;
 
   @override
   State<StrategyDetail> createState() => _StrategyDetailState();
@@ -22,13 +27,13 @@ class _StrategyDetailState extends State<StrategyDetail> {
   void initState() {
     super.initState();
     stockChecklistViewModel = StockChecklistViewModel();
-    _future = stockChecklistViewModel.initialize();
+    _future = stockChecklistViewModel.initialize(widget.strategy.id);
   }
 
   void _refresh() {
     setState(() {
       stockChecklistViewModel = StockChecklistViewModel();
-      _future = stockChecklistViewModel.initialize();
+      _future = stockChecklistViewModel.initialize(widget.strategy.id);
     });
   }
 
@@ -36,11 +41,11 @@ class _StrategyDetailState extends State<StrategyDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SubAppBar(title: "Strategy Detail"),
-      body: _buildBody(context, widget.strategy.id),
+      body: _buildBody(context, widget.strategy.id ?? "0"),
     );
   }
 
-  Widget _buildBody(BuildContext context, String? strategyId) {
+  Widget _buildBody(BuildContext context, String strategyId) {
     return FutureBuilder(
       future: _future,
       builder: (context, snapshot) {
@@ -86,7 +91,7 @@ class _StrategyDetailState extends State<StrategyDetail> {
                   ],
                 ),
                 ConfigConstant.sizedBoxH3,
-                Expanded(child: _buildCheckList(context, strategyId)),
+                ChecklistList(strategyId: strategyId),
               ],
             ),
           ),
@@ -179,46 +184,6 @@ class _StrategyDetailState extends State<StrategyDetail> {
                     : Color(0xFFF44336), // Red for loss
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildChecklistListTitle(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          "Checklist",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: const Color(0xFF878787),
-          ),
-        ),
-        TextButton(
-          onPressed: () {},
-          child: Row(
-            children: [
-              const Text(
-                "View All",
-                style: TextStyle(
-                  color: Color(0xFF5163BF),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Icon(Icons.arrow_forward_ios, color: Color(0xFF5163BF)),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCheckList(BuildContext context, String? strategyId) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildChecklistListTitle(context),
-        Expanded(child: ChecklistList(strategyId: strategyId)),
       ],
     );
   }
